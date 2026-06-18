@@ -1,7 +1,7 @@
 import time
 import pandas as pd
 import requests
-from db import engine, cloud_engine
+from Data.db import engine, cloud_engine
 from datetime import date
 from config import API_KEY, COIN_GEKO_URL
 
@@ -136,7 +136,7 @@ sol_info = get_circ_and_fdv("solana")
 
 def update_df():
     query = "SELECT MAX(timestamp) FROM crypto_prices"
-    latest_timestamp = pd.read_sql(query, engine).iloc[0, 0]
+    latest_timestamp = pd.read_sql(query, cloud_engine).iloc[0, 0]
 
     # Empty table -> nothing to update against, so source a full year.
     if pd.isna(latest_timestamp):
@@ -147,24 +147,18 @@ def update_df():
         latest_timestamp = pd.Timestamp(latest_timestamp)
         now_utc = pd.Timestamp.now(tz="UTC").tz_localize(None)
         days_to_source = (now_utc - latest_timestamp).days
+        days_to_source = max(days_to_source, 7)
 
     if days_to_source < 1:
         print("crypto_prices is already up to date.")
         return
 
     new_df = build_crypto_dataframe(days_to_source)
-    new_df = build_crypto_dataframe(days_to_source)
 
     new_df = new_df[
     new_df["timestamp"] > latest_timestamp
     ]
 
-    new_df.to_sql(
-    "crypto_prices",
-    engine,
-    if_exists="append",
-    index=False
-)
     new_df.to_sql(
     "crypto_prices", 
     cloud_engine, 

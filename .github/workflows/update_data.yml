@@ -1,0 +1,30 @@
+name: Daily Crypto Update
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Update Script
+        env:
+          COIN_GEKO_API_KEY: ${{ secrets.COIN_GEKO_API_KEY }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          POSTGRE_URL: ${{ secrets.POSTGRE_URL }}
+          NEON_URL: ${{ secrets.NEON_URL }}
+        run: python -m Data.update

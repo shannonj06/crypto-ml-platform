@@ -1,0 +1,28 @@
+name: Tests
+
+# The market classifier decides whether a question is a barrier or a settlement
+# bet, and getting that wrong silently mispriced every "will X dip to $Y"
+# market by roughly half. These tests run on every push so it can't come back.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest tests/ -v

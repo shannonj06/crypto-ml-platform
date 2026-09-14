@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+
+/* Tokens. Colours, type and shape all come from here. */
+@theme {
+  /* Neutral greys, slightly cool. Never pure black. */
+  --color-canvas: #0f1011;
+  --color-raised: #171819;
+  --color-card: #1b1d1e;
+
+  --color-fg: #e4e5e6;
+  --color-muted: #8b9094;
+
+  /* One accent, used for our own number and the primary action. */
+  --color-accent: #d3922f;
+
+  /* Hairlines do the structural work that shadows would normally do. */
+  --color-line: rgba(228, 229, 230, 0.1);
+  --color-line-strong: rgba(228, 229, 230, 0.2);
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-mono:
+    ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Menlo, Consolas, monospace;
+
+  --text-title: 1.5rem;
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.01em;
+  --text-title--font-weight: 600;
+
+  --text-lead: 1rem;
+  --text-lead--line-height: 1.6;
+
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.4;
+
+  /* Squared off. This is a tool, not a marketing page. */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+}
+
+@layer base {
+  html {
+    font-size: 15px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+  }
+
+  /* Figures line up in columns and never shift width as they change. */
+  .font-mono,
+  code,
+  kbd {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 30%, transparent);
+    color: var(--color-fg);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}

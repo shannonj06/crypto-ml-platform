@@ -1,0 +1,83 @@
+name: Crypto outlook
+
+# Refresh prices, then publish the outlook + Polymarket signals to reports/.
+# Runs on its own schedule so a data-source hiccup can't publish a stale report:
+# the freshness gate below stops the run before it writes anything.
+
+on:
+  schedule:
+    # 12:00 UTC on days 1, 4, 7, ... Note this resets at each month boundary,
+    # so the gap across the 31st can be shorter than 3 days.
+    - cron: '0 12 */3 * *'
+  workflow_dispatch:
+    inputs:
+      horizon:
+        description: 'Forecast horizon in days'
+        type: string
+        default: '7'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: crypto-outlook
+  cancel-in-progress: false
+
+jobs:
+  outlook:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Refresh daily closes (BTC/ETH/SOL)
+        run: python -m app.update_prices
+
+      # A stale dataset manufactures edges that aren't there. Stop here rather
+      # than publish a report nobody should trade on.
+      - name: Gate on data freshness
+        run: python -m scripts.data_status --strict
+
+      - name: Generate outlook report
+        env:
+          OUTLOOK_HORIZON: ${{ inputs.horizon || '7' }}
+        run: python -m app.report
+
+      - name: Commit report and refreshed data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/ Database/Crypto_ML_Dataset.csv
+          if git diff --staged --quiet; then
+            echo "Report unchanged; nothing to commit."
+          else
+            git commit -m "chore(outlook): report $(date -u +%Y-%m-%d)"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push
+          fi
+
+      - name: Write run summary
+        if: always()
+        run: |
+          {
+            echo "## Crypto outlook"
+            echo ""
+            python -m scripts.data_status --markdown
+            echo ""
+            if [ -f reports/outlook_latest.md ]; then
+              echo "<details><summary>Latest report</summary>"
+              echo ""
+              cat reports/outlook_latest.md
+              echo ""
+              echo "</details>"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

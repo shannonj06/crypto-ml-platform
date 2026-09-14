@@ -1,30 +1,118 @@
-name: Daily Crypto Update
+name: Update data
+
+# One scheduled run that refreshes every source. Each source is independent:
+# a dead API or a missing secret degrades that one source, it does not take
+# the run down with it. The step summary reports what actually landed.
 
 on:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 10 * * *'      # 10:00 UTC daily
   workflow_dispatch:
+    inputs:
+      skip_database:
+        description: 'Skip the CoinGecko -> Neon load (file sources only)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+# Never let two runs push to the same branch at once.
+concurrency:
+  group: update-data
+  cancel-in-progress: false
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    # Job-level env so steps can test whether a secret was actually configured.
+    env:
+      COIN_GEKO_API_KEY: ${{ secrets.COIN_GEKO_API_KEY }}
+      COINGECKO_URL: ${{ secrets.COINGECKO_URL || secrets.BASE_URL }}
+      NEON_URL: ${{ secrets.NEON_URL }}
+      POSTGRE_URL: ${{ secrets.POSTGRE_URL }}
 
-      - name: Set Up Python
-        uses: actions/setup-python@v5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # full history so the rebase before push works
+
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: pip
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Update Script
-        env:
-          COIN_GEKO_API_KEY: ${{ secrets.COIN_GEKO_API_KEY }}
-          BASE_URL: ${{ secrets.BASE_URL }}
-          POSTGRE_URL: ${{ secrets.POSTGRE_URL }}
-          NEON_URL: ${{ secrets.NEON_URL }}
-        run: python -m Data.update
+      # --- Source 1: Binance public klines. No credentials. ------------------
+      # This is the one the prediction engine reads. If it fails, the run fails.
+      - name: 'Source: daily closes (Binance)'
+        id: prices
+        continue-on-error: true
+        run: python -m app.update_prices
+
+      # --- Source 2: Fear & Greed index. No credentials. --------------------
+      - name: 'Source: Fear & Greed index'
+        id: fear_greed
+        continue-on-error: true
+        run: python -m Data_Sourcing.multiData
+
+      # --- Source 3: CoinGecko -> Neon. Needs secrets, skipped without. -----
+      - name: 'Source: CoinGecko -> Neon'
+        id: neon
+        if: >-
+          inputs.skip_database != true
+          && env.NEON_URL != ''
+          && env.COINGECKO_URL != ''
+        continue-on-error: true
+        run: python -m Data_Sourcing.update
+
+      - name: 'Source: CoinGecko -> Neon (skipped)'
+        if: >-
+          inputs.skip_database != true
+          && (env.NEON_URL == '' || env.COINGECKO_URL == '')
+        run: |
+          echo "::warning title=Database load skipped::Set the NEON_URL and \
+          COINGECKO_URL repository secrets to enable the CoinGecko -> Neon load."
+
+      # --- Commit whatever changed ------------------------------------------
+      - name: Commit refreshed data
+        id: commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Database/*.csv
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No file changes to commit."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git commit -m "chore(data): refresh $(date -u +%Y-%m-%d)"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push
+          fi
+
+      # --- Report -----------------------------------------------------------
+      - name: Write run summary
+        if: always()
+        run: |
+          {
+            echo "## Data refresh"
+            echo ""
+            echo "| Source | Result |"
+            echo "|---|---|"
+            echo "| Daily closes (Binance) | ${{ steps.prices.outcome }} |"
+            echo "| Fear & Greed | ${{ steps.fear_greed.outcome }} |"
+            echo "| CoinGecko -> Neon | ${{ steps.neon.outcome || 'skipped' }} |"
+            echo "| Committed | ${{ steps.commit.outputs.changed }} |"
+            echo ""
+            echo "### Dataset freshness"
+            echo ""
+            python -m scripts.data_status --markdown
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # The engine's own feed is not allowed to fail silently.
+      - name: Verify the engine's price feed is fresh
+        run: python -m scripts.data_status --strict

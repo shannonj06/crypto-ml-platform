@@ -1,37 +1,37 @@
-# Crypto Outlook — 2026-10-22
+# Crypto Outlook — 2026-10-25
 
-*Generated 2026-10-22T16:40:05+00:00 · 7-day horizon*
+*Generated 2026-10-25T15:35:04+00:00 · 7-day horizon*
 
 ## Price outlook (btc / eth / sol)
 
 | Asset | Price now | Likely range | Chance up |
 |-------|-----------|--------------|-----------|
-| BTC | $84,093 | $80,494 – $88,361 | 52% |
-| ETH | $2,474 | $2,342 – $2,639 | 51% |
-| SOL | $107 | $100 – $116 | 51% |
+| BTC | $80,888 | $77,335 – $85,143 | 52% |
+| ETH | $2,359 | $2,232 – $2,517 | 51% |
+| SOL | $102 | $96 – $111 | 51% |
 
-*Range is the 10th–90th percentile of 7-day Monte Carlo paths. Based on prices through 2026-10-21.*
+*Range is the 10th–90th percentile of 7-day Monte Carlo paths. Based on prices through 2026-10-24.*
 
 ## Polymarket signals
 
-Showing the top 15 of 116 actionable markets (167 priced in total — see the JSON for all).
+Showing the top 15 of 62 actionable markets (158 priced in total — see the JSON for all).
 
 | Market | Our prob | Market prob | Edge | Action | Bet |
 |--------|----------|-------------|------|--------|-----|
-| Will Bitcoin reach $83,000 on October 22? | 87% | 10% | +76% | YES | $50 |
-| Will Ethereum reach $2,450 on October 22? | 76% | 11% | +65% | YES | $50 |
-| Will the price of Bitcoin be above $82,000 on O... | 95% | 36% | +59% | YES | $50 |
-| Will Bitcoin dip to $80,000 in October? | 15% | 70% | -55% | NO | $50 |
-| Will Bitcoin reach $84,000 on October 22? | 56% | 2% | +53% | YES | $50 |
-| Will the price of Bitcoin be above $82,000 on O... | 91% | 39% | +52% | YES | $50 |
-| Will the price of Bitcoin be above $84,000 on O... | 56% | 4% | +51% | YES | $50 |
-| Will Bitcoin dip to $81,000 on October 22? | 2% | 52% | -51% | NO | $50 |
-| Will the price of Ethereum be above $2,400 on O... | 95% | 44% | +51% | YES | $50 |
-| Will the price of Bitcoin be above $84,000 on O... | 56% | 8% | +48% | YES | $50 |
-| Will Solana dip to $100 in October? | 18% | 65% | -47% | NO | $50 |
-| Will Solana dip to $100 in October? | 18% | 65% | -47% | NO | $50 |
-| Will the price of Ethereum be between $2,300 an... | 5% | 52% | -47% | NO | $50 |
-| Will the price of Bitcoin be above $82,000 on O... | 88% | 42% | +46% | YES | $50 |
-| Will Ethereum dip to $2,300 in October? | 12% | 58% | -46% | NO | $50 |
+| Will Bitcoin dip to $80,000 on October 25? | 17% | 50% | -33% | NO | $50 |
+| Will Bitcoin dip to $80,000 October 19-25? | 17% | 50% | -32% | NO | $50 |
+| Will Bitcoin reach $81,000 on October 25? | 44% | 73% | -29% | NO | $50 |
+| Will Ethereum dip to $2,200 in October? | 10% | 38% | -27% | NO | $50 |
+| Will Ethereum dip to $2,300 October 19-25? | 7% | 32% | -24% | NO | $50 |
+| Will Bitcoin dip to $77,500 in October? | 16% | 40% | -24% | NO | $50 |
+| Will Bitcoin reach $82,500 in October? | 42% | 63% | -21% | NO | $50 |
+| Will the price of Ethereum be between $2,300 an... | 79% | 58% | +21% | YES | $50 |
+| Will Ethereum dip to $2,300 on October 25? | 7% | 28% | -20% | NO | $50 |
+| Will the price of Ethereum be between $2,300 an... | 65% | 45% | +20% | YES | $50 |
+| Will Ethereum reach $2,400 in October? | 52% | 71% | -19% | NO | $50 |
+| Will the price of Bitcoin be between $80,000 an... | 68% | 50% | +18% | YES | $50 |
+| Will the price of Ethereum be between $2,300 an... | 47% | 29% | +18% | YES | $50 |
+| Will the price of Ethereum be between $2,300 an... | 56% | 38% | +18% | YES | $50 |
+| Will Ethereum reach $2,500 in October? | 16% | 32% | -17% | NO | $50 |
 
 *Bet sizes assume a $1,000 bankroll, quarter-Kelly. This is not cleared for real money — see the gates in trading/.*

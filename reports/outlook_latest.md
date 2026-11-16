@@ -1,37 +1,37 @@
-# Crypto Outlook — 2026-11-13
+# Crypto Outlook — 2026-11-16
 
-*Generated 2026-11-13T19:13:55+00:00 · 7-day horizon*
+*Generated 2026-11-16T21:39:13+00:00 · 7-day horizon*
 
 ## Price outlook (btc / eth / sol)
 
 | Asset | Price now | Likely range | Chance up |
 |-------|-----------|--------------|-----------|
-| BTC | $71,460 | $67,412 – $76,364 | 52% |
-| ETH | $2,020 | $1,868 – $2,216 | 50% |
-| SOL | $82 | $76 – $90 | 50% |
+| BTC | $65,351 | $60,619 – $71,151 | 51% |
+| ETH | $1,835 | $1,662 – $2,062 | 50% |
+| SOL | $73 | $66 – $83 | 50% |
 
-*Range is the 10th–90th percentile of 7-day Monte Carlo paths. Based on prices through 2026-11-12.*
+*Range is the 10th–90th percentile of 7-day Monte Carlo paths. Based on prices through 2026-11-15.*
 
 ## Polymarket signals
 
-Showing the top 15 of 142 actionable markets (190 priced in total — see the JSON for all).
+Showing the top 15 of 63 actionable markets (247 priced in total — see the JSON for all).
 
 | Market | Our prob | Market prob | Edge | Action | Bet |
 |--------|----------|-------------|------|--------|-----|
-| Will the price of Bitcoin be above $70,000 on N... | 89% | 10% | +79% | YES | $50 |
-| Will the price of Bitcoin be between $68,000 an... | 9% | 78% | -69% | NO | $50 |
-| Will Bitcoin reach $71,000 on November 13? | 69% | 3% | +66% | YES | $50 |
-| Will Ethereum reach $2,000 on November 13? | 70% | 7% | +64% | YES | $50 |
-| Will the price of Ethereum be above $2,000 on N... | 70% | 8% | +63% | YES | $50 |
-| Will the price of Ethereum be above $2,000 on N... | 70% | 8% | +63% | YES | $50 |
-| Will the price of Bitcoin be above $70,000 on N... | 83% | 20% | +63% | YES | $50 |
-| Will the price of Ethereum be between $2,000 an... | 63% | 8% | +56% | YES | $50 |
-| Will the price of Ethereum be between $1,900 an... | 27% | 83% | -56% | NO | $50 |
-| Will the price of Ethereum be above $2,000 on N... | 66% | 15% | +50% | YES | $50 |
-| Will the price of Bitcoin be between $70,000 an... | 60% | 10% | +50% | YES | $50 |
-| Will the price of Bitcoin be between $68,000 an... | 13% | 62% | -49% | NO | $50 |
-| Will the price of Bitcoin be above $70,000 on N... | 78% | 30% | +49% | YES | $50 |
-| Will Bitcoin reach $70,000 November 9-15? | 93% | 48% | +45% | YES | $50 |
-| Will Bitcoin dip to $68,000 November 9-15? | 5% | 50% | -44% | NO | $50 |
+| Will Solana dip to $70 in November? | 58% | 89% | -31% | NO | $50 |
+| Will Ethereum dip to $1,800 November 16-22? | 56% | 82% | -26% | NO | $50 |
+| Will Bitcoin dip to $64,000 November 16-22? | 48% | 71% | -23% | NO | $50 |
+| Will Ethereum dip to $1,800 in November? | 69% | 90% | -21% | NO | $50 |
+| Will Bitcoin reach $66,000 November 16-22? | 65% | 82% | -16% | NO | $46 |
+| Will Bitcoin dip to $62,000 November 16-22? | 22% | 38% | -16% | NO | $50 |
+| Will Bitcoin dip to $62,500 in November? | 44% | 60% | -16% | NO | $50 |
+| Will the price of Solana be above $70 on Novemb... | 80% | 65% | +15% | YES | $50 |
+| Will the price of Solana be above $70 on Novemb... | 84% | 69% | +15% | YES | $50 |
+| Will Solana dip to $60 in November? | 8% | 23% | -14% | NO | $50 |
+| Will the price of Solana be above $70 on Novemb... | 91% | 77% | +14% | YES | $50 |
+| Will the price of Solana be between $60 and $70... | 9% | 23% | -14% | NO | $50 |
+| Will Ethereum dip to $1,700 in November? | 38% | 52% | -14% | NO | $50 |
+| Will Ethereum dip to $1,700 November 16-22? | 21% | 34% | -14% | NO | $50 |
+| Will Bitcoin dip to $60,000 in November? | 23% | 36% | -13% | NO | $50 |
 
 *Bet sizes assume a $1,000 bankroll, quarter-Kelly. This is not cleared for real money — see the gates in trading/.*
